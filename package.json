@@ -1,0 +1,38 @@
+{
+  "name": "cyber-byp",
+  "version": "2.0.0",
+  "description": "Universal Cloudflare Bypass Engine - by misantropi4#cybersec",
+  "main": "cyber-byp.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "cloudflare",
+    "bypass",
+    "turnstile",
+    "sucuri",
+    "akamai",
+    "datadome",
+    "imperva",
+    "puppeteer",
+    "stealth",
+    "anti-bot",
+    "captcha-solver"
+  ],
+  "author": "misantropi4#cybersec",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.0",
+    "puppeteer": "^22.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seuusuario/cyber-byp"
+  }
+}
