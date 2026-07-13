@@ -8,32 +8,44 @@ O **CyberByp** é um motor de bypass universal para Cloudflare, Turnstile, Sucur
 
 git clone https://github.com/seuusuario/cyber-byp.git
 cd cyber-byp
-
+2. Instale as dependências
+bash
 npm install puppeteer puppeteer-extra puppeteer-extra-plugin-stealth
-
 Nota: O Puppeteer baixa automaticamente o Chromium (~300MB). Se já tiver o Chrome instalado, pule o download com:
 
+bash
 export PUPPETEER_SKIP_DOWNLOAD=true
 E configure o caminho do Chrome no código: executablePath: '/usr/bin/google-chrome'
 
-📖 exemplo de uso 
-
+3. Pronto! O CyberByp está instalado.
+📖 Uso Básico
+javascript
 const CyberByp = require('./cyber-byp');
 
 (async () => {
+    // Criar instância do bypass
     const bypass = new CyberByp({
         headless: 'new',  // 'new' = navegador invisível, false = navegador visível
         timeout: 120000,  // tempo máximo para bypass (2 minutos)
         retry: 5          // número de tentativas
     });
     
+    // Inicializar o navegador
     await bypass.init();
     
- 
+    // Bypassar uma URL protegida
     const result = await bypass.bypass('https://site-protegido.com');
     
-
+    if (result.ok) {
+        console.log('✅ Bypass realizado com sucesso!');
+        console.log('🍪 Cookies:', result.cookies);
+        console.log('⏱️ Tempo:', result.time);
+        console.log('📄 HTML:', result.html.substring(0, 500));
+        console.log('🔑 Sessão:', result.session);
+        
+        // Você pode reutilizar a página para fazer requisições
         const page = result.page;
+        // ... fazer login, navegar, etc ...
     } else {
         console.log('❌ Bypass falhou:', result.error);
     }
@@ -41,32 +53,15 @@ const CyberByp = require('./cyber-byp');
     // Fechar o navegador
     await bypass.close();
 })();
-
-
-
-
- Opções do Construtor
+🔧 Opções do Construtor
 Opção	Tipo	Padrão	Descrição
 headless	string/bool	'new'	Modo do navegador. 'new' = invisível, false = visível (para debug)
 timeout	number	120000	Tempo máximo em milissegundos para cada tentativa
 retry	number	5	Número máximo de tentativas de bypass
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Retorno do Método bypass()
+📤 Retorno do Método bypass()
 O método bypass(url) retorna um objeto com os seguintes campos:
 
+javascript
 {
     ok: true,                          // Booleano: sucesso ou falha
     session: 'abc123def456',           // ID único da sessão (para reutilizar)
@@ -79,29 +74,14 @@ O método bypass(url) retorna um objeto com os seguintes campos:
     time: '8.45s',                     // Tempo gasto no bypass
     page: <PuppeteerPage>              // Objeto Page do Puppeteer (reutilizável)
 }
-
-
-
-
-
-
-
-
-
-
-
-
 Em caso de erro:
+javascript
 {
     ok: false,
     error: 'Mensagem do erro',
     session: 'abc123def456'
 }
-
-
-
-
-Proteções Suportadas
+🛡️ Proteções Suportadas
 O CyberByp consegue burlar as seguintes proteções:
 
 Proteção	Identificador	Status
@@ -116,13 +96,8 @@ PerimeterX	px-captcha, PerimeterX	✅ Suportado
 Reblaze	reblaze	✅ Suportado
 Distil Networks	distil	✅ Suportado
 Captcha Genérico	captcha, recaptcha	✅ Suportado
-
-
-
-
-
-
-PI Server (Express)
+📚 Exemplos de Integração
+1. API Server (Express)
 Crie um arquivo server.js:
 
 javascript
@@ -378,3 +353,4 @@ R: Sim! Passe --proxy-server=ip:port nos args do Puppeteer.
 📝 Licença
 MIT - Faça o que quiser, apenas mantenha os créditos.
 
+by misantropi4#cybersec
